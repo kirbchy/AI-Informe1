@@ -18,3 +18,26 @@ Hicimos lo siguiente:
 
 ---
 
+### ¿Cómo cambia el comportamiento del algoritmo si cambiamos la  función de costo? 
+
+En la prioridad solo usamos la distancia Manhatan, así: 
+
+```python
+heapq.heappush(frontier, (manhatan_distance(neighbor, goal), reached[neighbor])
+```
+
+Y siempre explora el nodo que parece más cercano a la meta según la heurística, sin considerar el costo recorrido.
+
+Si cambiamos la función para que sea con el costo: 
+
+```python
+priority = new_cost + manhatan_distance(neighbor, goal)
+```
+
+El algoritmo se convierte en A*, porque: 
+
+- Considera tanto la distancia recorrida como el cálculo de la meta.
+- Garantiza que encuentra el camino más corto si la heurística es aceptable.
+
+---
+
