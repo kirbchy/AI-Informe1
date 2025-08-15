@@ -64,3 +64,45 @@ def manhatan_distance_multi(pos, goals):
 Esto haría que el algoritmo siempre se dirija a la salida más próxima.
 
 --- 
+
+ ### Modifica el laberinto por uno más grande y con otro tipo de obstáculo además de paredes. ¿Qué limitación encuentras en el  algoritmo? 
+
+Cambiamos  el laberinto a un tamaño de 10x10 y pusimos un nuevo tipo de obstáculo "~" que representa agua. 
+Este obstáculo es atravesable, pero en la vida real debería tener un costo mayor que caminar por un espacio libre " ", pero nos dimos cuenta de que el código actual no diferencia entre terrenos con distinto costo de movimiento:
+- Siempre asume que moverse a cualquier celda libre cuesta lo mismo (+1), sin importar el tipo de camino. Esto hace que, si la ruta más corta en cantidad de pasos atraviesa varias casillas de agua, el algoritmo la elija, aunque en términos de “costo real” no sea la mejor opción
+  
+- _Limitación encontrada:_ el algoritmo no maneja costos variables por tipo de celda, por lo que no puede planificar rutas óptimas en mapas con terrenos de distinta dificultad
+- _Posible solución:_ asignar un costo distinto a cada tipo de celda y modificar la forma en que se calcula el costo acumulado (new_cost), combinándolo con la heurística para implementar un algoritmo A*
+
+``` python
+# Nuevo laberinto 10x10
+maze = [
+    ["#", "#", "#", "#", "#", "#", "#", "#", "#", "#"],
+    ["#", "S", " ", " ", "~", " ", " ", " ", " ", "#"],
+    ["#", " ", "#", "#", "~", "#", "#", "#", " ", "#"],
+    ["#", " ", "#", " ", "~", " ", " ", "#", " ", "#"],
+    ["#", " ", "#", " ", "#", "#", " ", "#", " ", "#"],
+    ["#", " ", " ", " ", "#", " ", " ", "#", " ", "#"],
+    ["#", "#", "#", " ", "#", " ", "#", "#", " ", "#"],
+    ["#", "E", "#", " ", "~", " ", " ", " ", " ", "#"],
+    ["#", " ", " ", " ", "~", "#", "#", "#", " ", "#"],
+    ["#", "#", "#", "#", "#", "#", "#", "#", "#", "#"]
+]
+```
+``` python
+    # Costos por tipo de celda
+    terrain_cost = {
+        " ": 1,  # camino normal
+        "~": 3,  # agua, más costoso
+        "S": 1,
+        "E": 1
+    }
+
+```
+``` python
+
+priority = new_cost + manhatan_distance(neighbor, goal)
+heapq.heappush(frontier, (priority, reached[neighbor]))
+```
+
+
