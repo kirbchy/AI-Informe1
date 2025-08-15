@@ -41,3 +41,26 @@ El algoritmo se convierte en A*, porque:
 
 ---
 
+### ¿Qué sucede si hay múltiples salidas en el laberinto? ¿Cómo  podrías modificar el algoritmo para manejar esto? Plantea una  propuesta. 
+
+Si hubiera varias salidas, el algoritmo no las consideraría, solo buscaría la primera meta fija, porque la variable goal es un solo punto.
+Lo que proponemos para modificar el algoritmo es: 
+- Guardar todas las salidas en una lista.
+- Cambiar la condición de éxito.
+- Usar una heurística que calcule la distancia al objetivo más cercano.
+  
+ ``` python
+goals = [(1,6), (3,5), (2,7)]
+```
+``` python
+if node.position in goals:
+    return reconstruct_path(node)
+```
+``` python
+def manhatan_distance_multi(pos, goals):
+    return min(abs(pos[0] - g[0]) + abs(pos[1] - g[1]) for g in goals)
+```
+
+Esto haría que el algoritmo siempre se dirija a la salida más próxima.
+
+--- 
