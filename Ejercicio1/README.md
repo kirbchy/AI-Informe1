@@ -26,3 +26,10 @@ Para cada nodo usamos la función `f(node)` que se calcula como:
 *h(n) es una estimación heurística de cuánto falta para llegar al objetivo `heuristic.get(node.state, float('inf'))`.*
 
 También utilizamos una cola de prioridad (heapq) para guardar los nodos según su valor de f(n). Por lo que siempre expandimos primero el nodo que tenga el menor costo total estimado.
+
+---
+
+### ¿Por qué se considera que la ruta encontrada es óptima?
+
+Porque gracias al algoritmo _A*_ se evalúa cada posible camino teniendo en cuenta el costo real recorrido y unaestimación realista de lo que falta para llegar(heurística).
+
